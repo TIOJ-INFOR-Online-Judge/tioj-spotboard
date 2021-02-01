@@ -33,14 +33,14 @@ new Promise((resolve, reject) => {
 	})
 }).then(() => console.log('connect success'))
 .then(() => new Promise((resolve, reject) => {
-	sql.query(`select title, start_time, end_time, freeze_time from contests where id=${contest_id};`, (err, [contest], fields) => {
+	sql.query("select title, start_time, end_time, freeze_time from contests where id=?", [contest_id], (err, [contest], fields) => {
 		if (!contest) reject(`No contest with id ${contest_id} found`)
 		({ start_time: contest_start_time, end_time: contest_end_time, freeze_time: contest_freeze_time } = contest)
 		contest_length = (contest_end_time.valueOf() - contest_start_time.valueOf()) / (60 * 1000)
 		resolve()
 	})
 })).then(() => new Promise((resolve, reject) => {
-	sql.query(`select id, result, problem_id, user_id, created_at from submissions where contest_id=${contest_id};`, (err, submissions, fields) => {
+	sql.query("select id, result, problem_id, user_id, created_at from submissions where contest_id=?", [contest_id], (err, submissions, fields) => {
 		if (err) return reject(err)
 		resolve(submissions)
 	})
