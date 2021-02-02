@@ -1,14 +1,17 @@
 
 const wf = require('./waterflow.js')
 
-f = ({ sql, config: { userBase: user_base, problemBase: problem_base }, contest: { id: contest_id, start_time, length, freeze_time} }) => {
+f = ({ sql, config, contest, user_map, problem_map }) => {
+
+const { userBase: user_base, problemBase: problem_base } = config
+const { id: contest_id, start_time, length, freeze_time} = contest
 
 function convertToTeamId(user_id) {
-	return user_id - user_base // TODO
+	return user_map.get(user_id)
 }
 
 function convertToProblemId(problem_id) {
-	return problem_id - problem_base // TODO
+	return problem_map.get(problem_id)
 }
 
 return new Promise((resolve, reject) => {
