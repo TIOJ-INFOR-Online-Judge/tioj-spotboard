@@ -1,0 +1,10 @@
+# build artifact
+spotboard-*.tar.gz
+
+# node
+node_modules
+package-lock.json
+js/dist
+
+public/
+dist/
