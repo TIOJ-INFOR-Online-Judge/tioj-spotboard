@@ -5,6 +5,8 @@ const { hideBin } = require('yargs/helpers')
 module.exports = () => {
 
 return yargs(hideBin(process.argv))
+	.usage('Usage $0 --uid <uid> --pid <pid> --cid <cid>')
+
 	.describe('run-output', 'The output folder of run file')
 	.default('run-output', './webapp/src/sample/runs.json')
 
@@ -29,9 +31,16 @@ return yargs(hideBin(process.argv))
 	.describe('database', 'The MySQL database name')
 	.default('database', 'tioj_production')
 
+	.alias('cid', 'contest')
 	.describe('contest', 'The contest id')
 
-	.demandOption(['contest'])
+	.alias('pid', 'problem-base')
+	.describe('pid', 'The problem id base. If the first problem id is x, please set as x - 1')
+
+	.alias('uid', 'user-base')
+	.describe('uid', 'The user id base. If the first user id is x, please set a x - 1')
+
+	.demandOption(['cid', 'problem-base', 'user-base'])
 
 	.argv
 

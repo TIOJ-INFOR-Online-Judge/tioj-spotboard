@@ -11,10 +11,7 @@ if (config.testYargs) {
 
 const { host, port, user, password, database } = config
 
-const problem_base = 43 // 1-based TODO: param, permu
-const user_base = 31 // 1-based TODO: param, permu
-
-const { contest: contest_id } = config
+const { contest: contest_id, problemBase: problem_base, userBase: user_base } = config
 
 let contest_start_time
 let contest_end_time
