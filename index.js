@@ -1,15 +1,20 @@
 
+const fs = require('fs')
+
 const mysql = require('mysql')
 
-const host = '127.0.0.1' // TODO: param
-const user = 'root' // TODO: param
-const password = 'SAMPLE_PASSWORD' // TODO: param
-const database = 'tioj_production' // TODO: param
+const config = require('./parseArgs.js')()
+
+if (config.testYargs) {
+	return console.log(config)
+}
+
+const { host, port, user, password, database } = config
 
 const problem_base = 43 // 1-based TODO: param, permu
 const user_base = 31 // 1-based TODO: param, permu
 
-const contest_id = 9 // TODO: param
+const { contest: contest_id } = config
 
 let contest_start_time
 let contest_end_time
@@ -24,7 +29,7 @@ function convertToProblemId(problem_id) {
 	return problem_id - problem_base // TODO
 }
 
-const sql = mysql.createConnection({ host, user, password, database })
+const sql = mysql.createConnection({ host, port, user, password, database })
 
 new Promise((resolve, reject) => {
 	sql.connect(err => {
@@ -48,7 +53,7 @@ new Promise((resolve, reject) => {
 	if (submissions.length === 0) throw new Error(`Result has length 0, no submission found!`)
 	const submission_base = submissions[0].id - 1
 
-	return { runs: submissions
+	runs = submissions
 		.filter(({ result }) => result !== 'CE')
 		.map(({ id, result, problem_id, user_id, created_at }) => ({ 
 			id: id - submission_base,
@@ -56,9 +61,20 @@ new Promise((resolve, reject) => {
 			problem: convertToProblemId(problem_id),
 			team: convertToTeamId(user_id),
 			submission_time: Math.floor((created_at.valueOf() - contest_start_time.valueOf()) / (60 * 1000)),
-		})) }
+		}))
+
+	runs.reduce((o, r) => { 
+		return o || (r.submission_time >= contest_length - contest_freeze_time && (console.log(`The last submission before scoreboard frozen: ${r.id - 1}`), true))
+	}, false) || console.log(`No submission after scoreboard frozen!`)
+
+	return { runs }
 }).then(runs => {
-	console.log(JSON.stringify(runs)) // TODO: param
+	runs = JSON.stringify(runs)
+	const { stdout, runOutput } = config
+	if (stdout) {
+		return console.log(runs)
+	}
+	fs.writeFileSync(runOutput, runs)
 })
 
 .catch(console.error).then(sql.end).then(() => process.exit(0)).catch(console.error /* mysql package internal error */).then(() => process.exit(1))

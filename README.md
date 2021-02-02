@@ -1,20 +1,12 @@
-Spotboard
-=========
+# Spotboard for TIOJ
 
-*Spotboard* is an awesome, fancy, and modern web-based scoreboard application for programming contests, especially ACM-ICPC.
+![Original spotboard repository](https://github.com/spotboard/spotboard)
 
-Demo
-----
+### Prepare
 
-* Official Scoreboard:
-    ACM-ICPC Daejeon Regional
-    [[2015]](http://icpckorea.org/2015/REGIONAL/scoreboard.html)
-    [[2016]](http://icpckorea.org/2016/REGIONAL/scoreboard.html)
-* Award Ceremony Video:
-    [[2013]](https://youtu.be/ZXYwvFinZEk?t=1215)
-    [[2014]](https://youtu.be/UVAnGe35PY4)
-    [[2015]](https://youtu.be/kF5RR2TXgkk?t=287)
-    [[2016]](https://www.facebook.com/icpckorea/videos/1249185941806137/)
+Install `nodejs` and `npm`.
+
+### Usage
 
 Usage
 -----
