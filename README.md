@@ -1,6 +1,6 @@
 # Spotboard for TIOJ
 
-![Original spotboard repository](https://github.com/spotboard/spotboard)
+[Original spotboard repository](https://github.com/spotboard/spotboard)
 
 ### Prepare
 
