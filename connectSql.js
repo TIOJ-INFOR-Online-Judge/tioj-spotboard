@@ -10,7 +10,7 @@ return new Promise((resolve, reject) => {
 	const sql = mysql.createConnection({ host, port, user, password, database })
 	sql.connect(err => {
 		if (err) return reject(err)
-		console.log('connect success')
+		console.log('Connect success')
 		resolve({ sql })
 	})
 })
